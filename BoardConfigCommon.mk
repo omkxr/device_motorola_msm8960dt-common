@@ -14,16 +14,13 @@
 # limitations under the License.
 
 # inherit from the proprietary version
--include vendor/motorola/ghost/BoardConfigVendor.mk
+-include vendor/motorola/msm8960dt-common/BoardConfigVendor.mk
 
-LOCAL_PATH := device/motorola/ghost
+LOCAL_PATH := device/motorola/msm8960dt-common
 
 BOARD_VENDOR := motorola-qcom
 
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
-
-# Assert
-TARGET_OTA_ASSERT_DEVICE := xt1052,ghost,xt1053,ghost_retail,xt1055,ghost_usc,xt1056,ghost_sprint,xt1058,ghost_att,ghost_rcica,xt1060,ghost_verizon
 
 # Platform
 TARGET_BOARD_PLATFORM := msm8960
@@ -68,7 +65,6 @@ TARGET_USES_QCOM_COMPRESSED_AUDIO := true
 QCOM_ADSP_SSR_ENABLED := false
 
 # Bluetooth
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
 BLUETOOTH_HCI_USE_MCT := true
@@ -90,28 +86,11 @@ BOARD_USES_LEGACY_MMAP := true
 # Fonts
 EXTENDED_FONT_FOOTPRINT := true
 
-# Init
-TARGET_INIT_VENDOR_LIB := libinit_msm
-TARGET_LIBINIT_DEFINES_FILE := $(LOCAL_PATH)/init/init_ghost.c
-TARGET_NR_SVC_SUPP_GIDS := 28
-TARGET_UNIFIED_DEVICE := true
-
-# Lights
-TARGET_PROVIDES_LIBLIGHT := true
-
 # Media
 TARGET_NO_ADAPTIVE_PLAYBACK := true
 
 # Motorola
 TARGET_USES_MOTOROLA_LOG := true
-
-# Partitions
-BOARD_FLASH_BLOCK_SIZE := 131072
-BOARD_HAS_LARGE_FILESYSTEM := true
-BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00A00000
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x00A00000
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1560281088
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 12884901888
 
 # Power HAL
 TARGET_POWERHAL_VARIANT := qcom
@@ -120,7 +99,6 @@ TARGET_POWERHAL_VARIANT := qcom
 BOARD_USES_QCOM_HARDWARE := true
 
 # Recovery
-BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_RECOVERY_SWIPE := true
 BOARD_SUPPRESS_EMMC_WIPE := true
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
@@ -133,7 +111,7 @@ TARGET_USERIMAGES_USE_F2FS := true
 -include device/qcom/sepolicy/sepolicy.mk
 
 BOARD_SEPOLICY_DIRS += \
-    device/motorola/ghost/sepolicy
+    device/motorola/msm8960dt-common/sepolicy
 
 BOARD_SEPOLICY_UNION += \
     adspd.te \

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #set -e
-export DEVICE=ghost
+export FAMILY=msm8960dt-common
 export VENDOR=motorola
 
 if [ $# -eq 0 ]; then
@@ -20,7 +20,7 @@ else
   fi
 fi
 
-BASE=../../../vendor/$VENDOR/$DEVICE/proprietary
+BASE=../../../vendor/$VENDOR/$FAMILY/proprietary
 rm -rf $BASE/*
 
 for FILE in `egrep -v '(^#|^$)' proprietary-files.txt`; do

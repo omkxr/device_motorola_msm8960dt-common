@@ -16,10 +16,9 @@
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-$(call inherit-product, vendor/motorola/ghost/ghost-vendor.mk)
+$(call inherit-product, vendor/motorola/msm8960dt-common/msm8960dt-common-vendor.mk)
 
-# Overlay
-DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
+LOCAL_PATH := device/motorola/msm8960dt-common
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -48,6 +47,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
 # System Properties
+-include $(LOCAL_PATH)/system_prop.mk
+
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp
 
@@ -116,17 +117,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sec_config:system/etc/sec_config
 
-# Keylayout
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/keylayout/msp430sensorprocessor.kl:system/usr/keylayout/msp430sensorprocessor.kl
-
 # Keystore
 PRODUCT_PACKAGES += \
     keystore.msm8960
-
-# Lights
-PRODUCT_PACKAGES += \
-    lights.msm8960
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -198,10 +191,6 @@ PRODUCT_PACKAGES += \
     libcurl \
     libxml2
 
-# Thermal
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/thermald-ghost.conf:system/etc/thermald-ghost.conf
-
 # Torch
 PRODUCT_PACKAGES += \
     Torch
@@ -227,25 +216,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
 
-PRODUCT_PACKAGES += \
-    WCNSS_qcom_wlan_nv.bin \
-    WCNSS_qcom_wlan_nv_calibration.bin \
-    WCNSS_qcom_wlan_nv_regulatory.bin \
-    WCNSS_qcom_wlan_nv_calibration_0x3.bin \
-    WCNSS_qcom_wlan_nv_calibration_0x4.bin \
-    WCNSS_qcom_wlan_nv_calibration_0x5.bin \
-    WCNSS_qcom_wlan_nv_calibration_0x6.bin \
-    WCNSS_qcom_wlan_nv_regulatory_0x3.bin \
-    WCNSS_qcom_wlan_nv_regulatory_0x4.bin \
-    WCNSS_qcom_wlan_nv_regulatory_0x5.bin \
-    WCNSS_qcom_wlan_nv_regulatory_0x6.bin
-
 PRODUCT_COPY_FILES += \
     kernel/motorola/ghost/drivers/staging/prima_mmi/firmware_bin/WCNSS_cfg.dat:system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
-    kernel/motorola/ghost/drivers/staging/prima_mmi/firmware_bin/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
-    $(LOCAL_PATH)/wlan/cal_files/WCNSS_qcom_wlan_nv_calibration.bin:system/etc/firmware/wlan/prima/cal_files/WCNSS_qcom_wlan_nv_calibration.bin \
-    $(LOCAL_PATH)/wlan/cal_files/WCNSS_qcom_wlan_nv_calibration_0x1.bin:system/etc/firmware/wlan/prima/cal_files/WCNSS_qcom_wlan_nv_calibration_0x1.bin \
-    $(LOCAL_PATH)/wlan/cal_files/WCNSS_qcom_wlan_nv_calibration_0x2.bin:system/etc/firmware/wlan/prima/cal_files/WCNSS_qcom_wlan_nv_calibration_0x2.bin \
-    $(LOCAL_PATH)/wlan/cal_files/WCNSS_qcom_wlan_nv_regulatory.bin:system/etc/firmware/wlan/prima/cal_files/WCNSS_qcom_wlan_nv_regulatory.bin \
-    $(LOCAL_PATH)/wlan/cal_files/WCNSS_qcom_wlan_nv_regulatory_0x1.bin:system/etc/firmware/wlan/prima/cal_files/WCNSS_qcom_wlan_nv_regulatory_0x1.bin \
-    $(LOCAL_PATH)/wlan/cal_files/WCNSS_qcom_wlan_nv_regulatory_0x2.bin:system/etc/firmware/wlan/prima/cal_files/WCNSS_qcom_wlan_nv_regulatory_0x2.bin
+    kernel/motorola/ghost/drivers/staging/prima_mmi/firmware_bin/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini

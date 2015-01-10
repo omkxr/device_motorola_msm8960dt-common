@@ -1,26 +1,13 @@
-# ADSP
-bin/adspd
+# Bluetooth
+bin/btnvtool
+bin/hci_qcomm_init
 
 # Audio
 lib/libacdbloader.so
-lib/libaudcal.so
 
 # Audio firmware
 etc/firmware/aonvr1.bin
 etc/firmware/aonvr2.bin
-etc/firmware/tfa9890.config
-etc/firmware/tfa9890.eq
-etc/firmware/tfa9890.speaker
-etc/firmware/tfa9890_music_table.preset
-etc/firmware/tfa9890_n1b12.patch
-etc/firmware/tfa9890_n1c2.patch
-etc/firmware/tfa9890_ringtone_table.preset
-etc/firmware/tfa9890_voice_table.preset
-etc/firmware/VRGain.bin
-
-# Bluetooth
-bin/btnvtool
-bin/hci_qcomm_init
 
 # Camera
 bin/mm-qcamera-daemon
@@ -231,14 +218,6 @@ bin/refuse
 
 # MSP firmware
 bin/msp430
-etc/firmware/mspfirmware.bin
-etc/firmware/mspfirmware_p0.bin
-etc/firmware/mspfirmware_p1.bin
-etc/firmware/mspfirmware_p2.bin
-etc/firmware/mspversion.txt
-etc/firmware/mspversion_p0.txt
-etc/firmware/mspversion_p1.txt
-etc/firmware/mspversion_p2.txt
 
 # Postprocessing
 bin/mm-pp-daemon
@@ -285,11 +264,6 @@ lib/libril-qcril-hook-oem.so
 # Sensors
 lib/hw/sensorhub.msm8960.so
 lib/hw/sensors.msm8960.so
-
-# Touch frimware
-etc/firmware/synaptics-s3402-13040101-164656-ghost.tdat
-etc/firmware/synaptics-s3402-13040101-164656-ghost-p1a.tdat
-etc/firmware/synaptics-s3402b-13050201-167746-ghost.tdat
 
 # Time services
 -app/TimeService/TimeService.apk
