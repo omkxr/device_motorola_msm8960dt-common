@@ -25,6 +25,7 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+import init.target.rc
 import init.qcom.usb.rc
 
 on early-init
@@ -106,10 +107,6 @@ on fs
     restorecon_recursive /persist
 
     setprop ro.crypto.fuse_sdcard true
-
-on post-fs
-    # Link thermald
-    symlink /etc/thermald-msm8960dt.conf /dev/thermald.conf
 
 on post-fs-data
     mkdir /data/tombstones 0771 system system
