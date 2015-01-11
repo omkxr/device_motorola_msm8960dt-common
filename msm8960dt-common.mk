@@ -83,11 +83,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     camera.msm8960
 
-# Charger
-PRODUCT_PACKAGES += \
-    charger \
-    charger_res_images
-
 # CRDA
 PRODUCT_PACKAGES += \
     crda \
@@ -191,10 +186,6 @@ PRODUCT_PACKAGES += \
     libcurl \
     libxml2
 
-# Torch
-PRODUCT_PACKAGES += \
-    Torch
-
 # USB
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
@@ -208,8 +199,6 @@ PRODUCT_PACKAGES += \
     wpa_supplicant.conf
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/hostapd.accept:system/etc/hostapd/hostapd.accept \
-    $(LOCAL_PATH)/configs/hostapd.deny:system/etc/hostapd/hostapd.deny \
     $(LOCAL_PATH)/configs/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf \
 
 PRODUCT_COPY_FILES += \
