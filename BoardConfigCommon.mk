@@ -88,6 +88,9 @@ EXTENDED_FONT_FOOTPRINT := true
 # Media
 TARGET_NO_ADAPTIVE_PLAYBACK := true
 
+# Memory
+MALLOC_IMPL := dlmalloc
+
 # Motorola
 TARGET_USES_MOTOROLA_LOG := true
 
