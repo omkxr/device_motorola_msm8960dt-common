@@ -47,7 +47,6 @@ BOARD_KERNEL_SEPARATED_DT := true
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02200000
 TARGET_KERNEL_SOURCE := kernel/motorola/ghost
 TARGET_KERNEL_CONFIG := msm8960dt_mmi_defconfig
-TARGET_KERNEL_SELINUX_CONFIG := msm8960_mmi_selinux_defconfig
 
 WLAN_MODULES:
 	mkdir -p $(KERNEL_MODULES_OUT)/prima
