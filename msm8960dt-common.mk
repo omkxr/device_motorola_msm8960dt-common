@@ -103,6 +103,11 @@ PRODUCT_PACKAGES += \
     libgenlock \
     memtrack.msm8960
 
+# Doze mode
+PRODUCT_PACKAGES += \
+    libjni_motoSensor \
+    MotoDoze
+
 # Filesystem
 PRODUCT_PACKAGES += \
     e2fsck \
