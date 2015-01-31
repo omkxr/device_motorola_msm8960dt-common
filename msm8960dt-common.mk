@@ -20,6 +20,9 @@ $(call inherit-product, vendor/motorola/msm8960dt-common/msm8960dt-common-vendor
 
 LOCAL_PATH := device/motorola/msm8960dt-common
 
+# Overlay
+DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
+
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
