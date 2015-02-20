@@ -43,7 +43,7 @@ public class MotoDozeService extends Service {
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
 
     private static final int SENSOR_WAKELOCK_DURATION = 200;
-    private static final int MIN_PULSE_INTERVAL_MS = 5000;
+    private static final int MIN_PULSE_INTERVAL_MS = 10000;
 
     private Context mContext;
     private MotoSensor mFlatUpSensor;
@@ -51,7 +51,8 @@ public class MotoDozeService extends Service {
     private MotoSensor mStowSensor;
     private MotoSensor mCameraActivationSensor;
     private WakeLock mSensorWakeLock;
-    private long mEntryTimestamp;
+    private long mLastPulseTimestamp = 0;
+    private boolean mSuppressPulse = false;
 
     private MotoSensor.MotoSensorListener mListener = new MotoSensor.MotoSensorListener() {
         @Override
@@ -114,7 +115,14 @@ public class MotoDozeService extends Service {
     }
 
     private void launchDozePulse() {
-        mContext.sendBroadcast(new Intent(DOZE_INTENT));
+        long delta = SystemClock.elapsedRealtime() - mLastPulseTimestamp;
+        if (DEBUG) Log.d(TAG, "Time since last pulse: " + delta + " Suppress: " + mSuppressPulse);
+        if (!mSuppressPulse && delta > MIN_PULSE_INTERVAL_MS) {
+            mLastPulseTimestamp = SystemClock.elapsedRealtime();
+            mContext.sendBroadcast(new Intent(DOZE_INTENT));
+        }
+        /* Only allow one pulse to be suppressed */
+        mSuppressPulse = false;
     }
 
     private void launchCamera() {
@@ -137,38 +145,30 @@ public class MotoDozeService extends Service {
     }
 
     private void handleFlatUp(SensorEvent event) {
-        long delta = SystemClock.elapsedRealtime() - mEntryTimestamp;
-        if (delta < MIN_PULSE_INTERVAL_MS) {
-            return;
-        } else {
-            mEntryTimestamp = SystemClock.elapsedRealtime();
-        }
-
         /* FlatUp is 0 when vertical */
         /* FlatUp is 1 when horizontal */
-        /* MSP430 will not report event if proximity sensor is covered */
         if (event.values[0] == 0) {
             launchDozePulse();
         }
     }
 
     private void handleFlatDown(SensorEvent event) {
-        long delta = SystemClock.elapsedRealtime() - mEntryTimestamp;
-        if (delta < MIN_PULSE_INTERVAL_MS) {
-            return;
-        } else {
-            mEntryTimestamp = SystemClock.elapsedRealtime();
-        }
-
         /* FlatDown is 0 when vertical */
-        /* MSP430 will not report event if proximity sensor is covered */
         if (event.values[0] == 0) {
             launchDozePulse();
         }
     }
 
     private void handleStow(SensorEvent event) {
-        launchDozePulse();
+        boolean isStowed = (event.values[0] == 1);
+        if (isStowed) {
+            mFlatDownSensor.disable();
+            mCameraActivationSensor.disable();
+        } else {
+            mFlatDownSensor.enable();
+            mCameraActivationSensor.enable();
+        }
+        if (DEBUG) Log.d(TAG, "Stowed: " + isStowed);
     }
 
     private void handleCameraActivation(SensorEvent event) {
@@ -177,16 +177,19 @@ public class MotoDozeService extends Service {
 
     private void onDisplayOn() {
         if (DEBUG) Log.d(TAG, "Display on");
-        mFlatDownSensor.disable();
-        mCameraActivationSensor.disable();
+        if (isDozeEnabled()) {
+            mStowSensor.disable();
+            mFlatDownSensor.disable();
+            mCameraActivationSensor.disable();
+        }
     }
 
     private void onDisplayOff() {
         if (DEBUG) Log.d(TAG, "Display off");
         if (isDozeEnabled()) {
-            mEntryTimestamp = SystemClock.elapsedRealtime();
-            mFlatDownSensor.enable();
-            mCameraActivationSensor.enable();
+            mStowSensor.enable();
+            /* Suppress first pulse on display off, hardware will always trigger one */
+            mSuppressPulse = true;
         }
     }
 
