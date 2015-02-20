@@ -16,26 +16,20 @@
 
 package org.cyanogenmod.doze.motorola;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
-import android.os.UserHandle;
-import android.os.SystemClock;
-import android.provider.MediaStore;
+import android.util.Log;
 
-public abstract class MotoSensor {
+import java.util.ArrayList;
+import java.util.List;
 
+public class MotoSensor {
+
+    private static final boolean DEBUG = false;
     private static final String TAG = "MotoSensor";
-
-    private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
-
-    private static final int SENSOR_WAKELOCK_DURATION = 200;
 
     protected static final int SENSOR_TYPE_MMI_FLAT_UP = 34;
     protected static final int SENSOR_TYPE_MMI_FLAT_DOWN = 35;
@@ -45,12 +39,10 @@ public abstract class MotoSensor {
     protected static final int BATCH_LATENCY_IN_MS = 100;
 
     protected Context mContext;
-    protected PowerManager mPowerManager;
     protected SensorManager mSensorManager;
     protected Sensor mSensor;
     protected int mType;
-
-    private WakeLock mSensorWakeLock;
+    private List<MotoSensorListener> mListeners;
 
     static {
         System.load("/system/lib/libjni_motoSensor.so");
@@ -59,44 +51,40 @@ public abstract class MotoSensor {
     protected static native void native_enableWakeSensor(int wakeSensor);
     protected static native void native_disableWakeSensor(int wakeSensor);
 
+    public interface MotoSensorListener {
+        public void onEvent(int sensorType, SensorEvent event);
+    }
+
     public MotoSensor(Context context, int type) {
         mContext = context;
         mType = type;
-        mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(mType);
-        mSensorWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MotoSensorWakeLock");
+        mListeners = new ArrayList<MotoSensorListener>();
     }
 
     public void enable() {
+        if (DEBUG) Log.d(TAG, "Enabling");
         mSensorManager.registerListener(mSensorEventListener, mSensor,
                 SensorManager.SENSOR_DELAY_NORMAL, BATCH_LATENCY_IN_MS * 1000);
         native_enableWakeSensor(mType);
     }
 
     public void disable() {
+        if (DEBUG) Log.d(TAG, "Disabling");
         mSensorManager.unregisterListener(mSensorEventListener);
         native_disableWakeSensor(mType);
     }
 
-    protected void launchDozePulse() {
-        mContext.sendBroadcast(new Intent(DOZE_INTENT));
+    public void registerListener(MotoSensorListener listener) {
+        mListeners.add(listener);
     }
 
-    protected void launchCamera() {
-        mSensorWakeLock.acquire(SENSOR_WAKELOCK_DURATION);
-        mPowerManager.wakeUp(SystemClock.uptimeMillis());
-        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA_SECURE);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        try {
-            mContext.startActivityAsUser(intent, null, new UserHandle(UserHandle.USER_CURRENT));
-        } catch (ActivityNotFoundException e) {
-            /* Ignore */
+    private void onSensorEvent(SensorEvent event) {
+        for (MotoSensorListener l : mListeners) {
+            l.onEvent(mType, event);
         }
     }
-
-    protected abstract void onSensorEvent(SensorEvent event);
 
     private SensorEventListener mSensorEventListener = new SensorEventListener() {
         @Override
