@@ -178,6 +178,7 @@ public class MotoDozeService extends Service {
     private void onDisplayOn() {
         if (DEBUG) Log.d(TAG, "Display on");
         mFlatDownSensor.disable();
+        mCameraActivationSensor.disable();
     }
 
     private void onDisplayOff() {
@@ -185,6 +186,7 @@ public class MotoDozeService extends Service {
         if (isDozeEnabled()) {
             mEntryTimestamp = SystemClock.elapsedRealtime();
             mFlatDownSensor.enable();
+            mCameraActivationSensor.enable();
         }
     }
 
