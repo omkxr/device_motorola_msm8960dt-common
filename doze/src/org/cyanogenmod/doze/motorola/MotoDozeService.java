@@ -162,10 +162,14 @@ public class MotoDozeService extends Service {
     private void handleStow(SensorEvent event) {
         boolean isStowed = (event.values[0] == 1);
         if (isStowed) {
-            mFlatDownSensor.disable();
+            if (isDozeEnabled()) {
+                mFlatDownSensor.disable();
+            }
             mCameraActivationSensor.disable();
         } else {
-            mFlatDownSensor.enable();
+            if (isDozeEnabled()) {
+                mFlatDownSensor.enable();
+            }
             mCameraActivationSensor.enable();
         }
         if (DEBUG) Log.d(TAG, "Stowed: " + isStowed);
@@ -177,17 +181,17 @@ public class MotoDozeService extends Service {
 
     private void onDisplayOn() {
         if (DEBUG) Log.d(TAG, "Display on");
+        mStowSensor.disable();
+        mCameraActivationSensor.enable();
         if (isDozeEnabled()) {
-            mStowSensor.disable();
             mFlatDownSensor.disable();
-            mCameraActivationSensor.disable();
         }
     }
 
     private void onDisplayOff() {
         if (DEBUG) Log.d(TAG, "Display off");
+        mStowSensor.enable();
         if (isDozeEnabled()) {
-            mStowSensor.enable();
             /* Suppress first pulse on display off, hardware will always trigger one */
             mSuppressPulse = true;
         }
