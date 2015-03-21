@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.cyanogenmod.doze.motorola;
+package com.cyanogenmod.settings.device;
 
 import android.content.Context;
 import android.hardware.Sensor;
