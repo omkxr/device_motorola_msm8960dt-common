@@ -32,6 +32,7 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.UserHandle;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -196,6 +197,8 @@ public class MotoDozeService extends Service {
     }
 
     private void handleCameraActivation(SensorEvent event) {
+        Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(500);
         launchCamera();
     }
 
