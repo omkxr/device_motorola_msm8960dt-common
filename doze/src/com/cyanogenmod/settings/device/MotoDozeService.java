@@ -117,6 +117,7 @@ public class MotoDozeService extends Service {
     public void onDestroy() {
         if (DEBUG) Log.d(TAG, "Destroying service");
         super.onDestroy();
+        mCameraActivationSensor.disable();
         mFlatDownSensor.disable();
     }
 
