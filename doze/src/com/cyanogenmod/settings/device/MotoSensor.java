@@ -31,10 +31,10 @@ public class MotoSensor {
     private static final boolean DEBUG = false;
     private static final String TAG = "MotoSensor";
 
-    protected static final int SENSOR_TYPE_MMI_FLAT_UP = 34;
-    protected static final int SENSOR_TYPE_MMI_FLAT_DOWN = 35;
-    protected static final int SENSOR_TYPE_MMI_STOW = 36;
-    protected static final int SENSOR_TYPE_MMI_CAMERA_ACTIVATION = 37;
+    public static final int SENSOR_TYPE_MMI_FLAT_UP = 34;
+    public static final int SENSOR_TYPE_MMI_FLAT_DOWN = 35;
+    public static final int SENSOR_TYPE_MMI_STOW = 36;
+    public static final int SENSOR_TYPE_MMI_CAMERA_ACTIVATION = 37;
 
     protected static final int BATCH_LATENCY_IN_MS = 100;
 
