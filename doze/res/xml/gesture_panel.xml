@@ -23,6 +23,12 @@
         android:summary="@string/pick_up_gesture_summary" />
 
     <SwitchPreference
+        android:key="gesture_hand_wave"
+        android:defaultValue="true"
+        android:title="@string/hand_wave_gesture_title"
+        android:summary="@string/hand_wave_gesture_summary" />
+
+    <SwitchPreference
         android:key="gesture_camera"
         android:defaultValue="true"
         android:title="@string/camera_gesture_title"

@@ -23,6 +23,9 @@
     <string name="pick_up_gesture_title">Pick-up</string>
     <string name="pick_up_gesture_summary">Pulse notifications on pick-up</string>
 
+    <string name="hand_wave_gesture_title">Hand wave</string>
+    <string name="hand_wave_gesture_summary">Pulse notifications on hand wave</string>
+
     <string name="camera_gesture_title">Camera</string>
     <string name="camera_gesture_summary">Twist phone to activate camera</string>
 

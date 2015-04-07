@@ -47,9 +47,11 @@ public class MotoDozeService extends Service {
 
     private static final String GESTURE_CAMERA_KEY = "gesture_camera";
     private static final String GESTURE_PICK_UP_KEY = "gesture_pick_up";
+    private static final String GESTURE_HAND_WAVE_KEY = "gesture_hand_wave";
 
     private static final int SENSOR_WAKELOCK_DURATION = 200;
     private static final int MIN_PULSE_INTERVAL_MS = 10000;
+    private static final int HANDWAVE_DELTA_NS = 1000 * 1000 * 1000;
 
     private Context mContext;
     private FlatSensor mFlatSensor;
@@ -59,6 +61,8 @@ public class MotoDozeService extends Service {
     private long mLastPulseTimestamp = 0;
     private boolean mCameraGestureEnabled = false;
     private boolean mPickUpGestureEnabled = false;
+    private boolean mHandwaveGestureEnabled = false;
+    private long mLastStowed = 0;
 
     private MotoSensor.MotoSensorListener mListener = new MotoSensor.MotoSensorListener() {
         @Override
@@ -154,6 +158,12 @@ public class MotoDozeService extends Service {
                                     Settings.Secure.DOZE_ENABLED, 1) != 0);
     }
 
+    private boolean isHandwaveEnabled() {
+        return mHandwaveGestureEnabled &&
+            (Settings.Secure.getInt(mContext.getContentResolver(),
+                                    Settings.Secure.DOZE_ENABLED, 1) != 0);
+    }
+
     private boolean isCameraEnabled() {
         return mCameraGestureEnabled;
     }
@@ -168,6 +178,7 @@ public class MotoDozeService extends Service {
         boolean isStowed = (event.values[0] == 1);
 
         if (isStowed) {
+            mLastStowed = event.timestamp;
             if (isPickUpEnabled()) {
                 mFlatSensor.disable();
             }
@@ -175,6 +186,11 @@ public class MotoDozeService extends Service {
                 mCameraActivationSensor.disable();
             }
         } else {
+            if (DEBUG) Log.d(TAG, "Unstowed: " + event.timestamp + " last stowed: " + mLastStowed);
+            if (isHandwaveEnabled() && (event.timestamp - mLastStowed) < HANDWAVE_DELTA_NS) {
+                // assume this was a handwave and pulse
+                launchDozePulse();
+            }
             if (isPickUpEnabled()) {
                 mFlatSensor.enable();
             }
@@ -227,6 +243,7 @@ public class MotoDozeService extends Service {
     private void loadPreferences(SharedPreferences sharedPreferences) {
         mCameraGestureEnabled = sharedPreferences.getBoolean(GESTURE_CAMERA_KEY, false);
         mPickUpGestureEnabled = sharedPreferences.getBoolean(GESTURE_PICK_UP_KEY, false);
+        mHandwaveGestureEnabled = sharedPreferences.getBoolean(GESTURE_HAND_WAVE_KEY, false);
     }
 
     private SharedPreferences.OnSharedPreferenceChangeListener mPrefListener =
@@ -242,6 +259,8 @@ public class MotoDozeService extends Service {
                 }
             } else if (GESTURE_PICK_UP_KEY.equals(key)) {
                 mPickUpGestureEnabled = sharedPreferences.getBoolean(GESTURE_PICK_UP_KEY, false);
+            } else if (GESTURE_HAND_WAVE_KEY.equals(key)) {
+                mHandwaveGestureEnabled = sharedPreferences.getBoolean(GESTURE_HAND_WAVE_KEY, false);
             }
         }
     };
