@@ -9,8 +9,13 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <application android:label="MotoDoze"
-                 android:persistent="true">
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="21"/>
+
+    <application
+        android:label="MotoDoze"
+        android:persistent="true">
 
         <receiver android:name="com.cyanogenmod.settings.device.BootCompletedReceiver">
             <intent-filter>
@@ -23,13 +28,11 @@
                  android:permission="MotoDozeService">
         </service>
 
-        <activity android:name="MotoDoze"
-                  android:label="MotoDoze"
-                  android:excludeFromRecents="true"
-                  android:launchMode="singleInstance"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/MotoDozeTheme"
-                  android:windowAnimationStyle="@null">
+        <activity
+            android:name="MotoDoze"
+            android:label="MotoDoze"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -37,7 +40,8 @@
 
         <activity
             android:name=".TouchscreenGestureSettings"
-            android:label="@string/screen_gestures_panel_title">
+            android:label="@string/screen_gestures_panel_title"
+            android:theme="@android:style/Theme.Material.Settings">>
             <intent-filter>
                 <action android:name="com.cyanogenmod.action.LAUNCH_TOUCHSCREEN_GESTURE_SETTINGS" />
             </intent-filter>

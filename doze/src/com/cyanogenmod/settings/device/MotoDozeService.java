@@ -241,9 +241,9 @@ public class MotoDozeService extends Service {
     };
 
     private void loadPreferences(SharedPreferences sharedPreferences) {
-        mCameraGestureEnabled = sharedPreferences.getBoolean(GESTURE_CAMERA_KEY, false);
-        mPickUpGestureEnabled = sharedPreferences.getBoolean(GESTURE_PICK_UP_KEY, false);
-        mHandwaveGestureEnabled = sharedPreferences.getBoolean(GESTURE_HAND_WAVE_KEY, false);
+        mCameraGestureEnabled = sharedPreferences.getBoolean(GESTURE_CAMERA_KEY, true);
+        mPickUpGestureEnabled = sharedPreferences.getBoolean(GESTURE_PICK_UP_KEY, true);
+        mHandwaveGestureEnabled = sharedPreferences.getBoolean(GESTURE_HAND_WAVE_KEY, true);
     }
 
     private SharedPreferences.OnSharedPreferenceChangeListener mPrefListener =
@@ -251,16 +251,16 @@ public class MotoDozeService extends Service {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (GESTURE_CAMERA_KEY.equals(key)) {
-                mCameraGestureEnabled = sharedPreferences.getBoolean(GESTURE_CAMERA_KEY, false);
+                mCameraGestureEnabled = sharedPreferences.getBoolean(GESTURE_CAMERA_KEY, true);
                 if (mCameraGestureEnabled) {
                     mCameraActivationSensor.enable();
                 } else {
                     mCameraActivationSensor.disable();
                 }
             } else if (GESTURE_PICK_UP_KEY.equals(key)) {
-                mPickUpGestureEnabled = sharedPreferences.getBoolean(GESTURE_PICK_UP_KEY, false);
+                mPickUpGestureEnabled = sharedPreferences.getBoolean(GESTURE_PICK_UP_KEY, true);
             } else if (GESTURE_HAND_WAVE_KEY.equals(key)) {
-                mHandwaveGestureEnabled = sharedPreferences.getBoolean(GESTURE_HAND_WAVE_KEY, false);
+                mHandwaveGestureEnabled = sharedPreferences.getBoolean(GESTURE_HAND_WAVE_KEY, true);
             }
         }
     };
