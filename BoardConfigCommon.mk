@@ -118,6 +118,7 @@ BOARD_SEPOLICY_UNION += \
     file.te \
     init_shell.te \
     init.te \
+    installd.te \
     keystore.te \
     location.te \
     mediaserver.te \
