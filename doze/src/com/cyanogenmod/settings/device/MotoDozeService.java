@@ -210,7 +210,7 @@ public class MotoDozeService extends Service {
     private void onDisplayOn() {
         if (DEBUG) Log.d(TAG, "Display on");
 
-        if (isPickUpEnabled() || isCameraEnabled()) {
+        if (isPickUpEnabled() || isHandwaveEnabled() || isCameraEnabled()) {
             mStowSensor.disable();
         }
         if (isCameraEnabled()) {
@@ -224,7 +224,7 @@ public class MotoDozeService extends Service {
     private void onDisplayOff() {
         if (DEBUG) Log.d(TAG, "Display off");
 
-        if (isPickUpEnabled() || isCameraEnabled()) {
+        if (isPickUpEnabled() || isHandwaveEnabled() || isCameraEnabled()) {
             mStowSensor.enable();
         }
     }
