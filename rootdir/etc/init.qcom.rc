@@ -510,12 +510,17 @@ service btwlancoex /system/bin/sh /system/etc/init.qcom.coex.sh
     oneshot
     disabled
 
-on property:vold.decrypt=trigger_restart_framework
-    start config_bluetooth
+on property:bluetooth.hciattach=false
+    setprop bluetooth.status off
 
-service config_bluetooth /system/bin/sh /system/etc/init.qcom.bt.sh
-    class core
-    user root
+on property:bluetooth.hciattach=true
+    start hciattach
+
+service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
+    class late_start
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
     oneshot
 
 service hw_revs /system/bin/hardware_revisions.sh
