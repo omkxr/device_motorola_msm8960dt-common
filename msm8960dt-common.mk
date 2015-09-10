@@ -186,6 +186,7 @@ PRODUCT_PACKAGES += \
     init.mmi.touch.sh \
     init.qcom.rc \
     init.qcom.usb.rc \
+    init.qcom.power.rc \
     init.recovery.qcom.rc \
     ueventd.qcom.rc
 
