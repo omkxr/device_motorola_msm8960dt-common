@@ -88,6 +88,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.call_ring.multiple=false \
     ro.use_data_netmgrd=true
 
+# Scheduler
+PRODUCT_PROPERTY_OVERRIDES += \
+    sys.io.scheduler=row
+
 # SSR
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.qc.sub.rdump.max=20 \
