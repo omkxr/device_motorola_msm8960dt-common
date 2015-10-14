@@ -36,4 +36,7 @@
     <string name="camera_gesture_title">Camera</string>
     <string name="camera_gesture_summary">Twist phone to activate camera</string>
 
+    <string name="flashlight_gesture_title">Flashlight</string>
+    <string name="flashlight_gesture_summary">Chop phone to activate flashlight</string>
+
 </resources>

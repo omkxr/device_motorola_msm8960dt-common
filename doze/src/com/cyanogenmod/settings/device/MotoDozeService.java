@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.hardware.SensorEvent;
+import android.hardware.TorchManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -46,6 +47,7 @@ public class MotoDozeService extends Service {
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
 
     private static final String GESTURE_CAMERA_KEY = "gesture_camera";
+    private static final String GESTURE_FLASHLIGHT_KEY = "gesture_flashlight";
     private static final String GESTURE_PICK_UP_KEY = "gesture_pick_up";
     private static final String GESTURE_HAND_WAVE_KEY = "gesture_hand_wave";
 
@@ -57,9 +59,11 @@ public class MotoDozeService extends Service {
     private FlatSensor mFlatSensor;
     private MotoSensor mStowSensor;
     private MotoSensor mCameraActivationSensor;
+    private MotoSensor mFlashlightActivationSensor;
     private WakeLock mSensorWakeLock;
     private long mLastPulseTimestamp = 0;
     private boolean mCameraGestureEnabled = false;
+    private boolean mFlashlightGestureEnabled = false;
     private boolean mPickUpGestureEnabled = false;
     private boolean mHandwaveGestureEnabled = false;
     private long mLastStowed = 0;
@@ -75,6 +79,9 @@ public class MotoDozeService extends Service {
                     break;
                 case MotoSensor.SENSOR_TYPE_MMI_CAMERA_ACTIVATION:
                     handleCameraActivation(event);
+                    break;
+                case MotoSensor.SENSOR_TYPE_MMI_FLASHLIGHT_ACTIVATION:
+                    handleFlashlightActivation(event);
                     break;
             }
         }
@@ -100,6 +107,8 @@ public class MotoDozeService extends Service {
         mFlatSensor.registerListener(mFlatListener);
         mCameraActivationSensor = new MotoSensor(mContext, MotoSensor.SENSOR_TYPE_MMI_CAMERA_ACTIVATION);
         mCameraActivationSensor.registerListener(mListener);
+        mFlashlightActivationSensor = new MotoSensor(mContext, MotoSensor.SENSOR_TYPE_MMI_FLASHLIGHT_ACTIVATION);
+        mFlashlightActivationSensor.registerListener(mListener);
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         loadPreferences(sharedPrefs);
         sharedPrefs.registerOnSharedPreferenceChangeListener(mPrefListener);
@@ -121,6 +130,7 @@ public class MotoDozeService extends Service {
         if (DEBUG) Log.d(TAG, "Destroying service");
         super.onDestroy();
         mCameraActivationSensor.disable();
+        mFlashlightActivationSensor.disable();
         mFlatSensor.disable();
     }
 
@@ -152,6 +162,12 @@ public class MotoDozeService extends Service {
         }
     }
 
+    private void launchFlashlight() {
+        TorchManager torchManager;
+        torchManager = (TorchManager) mContext.getSystemService(Context.TORCH_SERVICE);
+        torchManager.toggleTorch();
+    }
+
     private boolean isPickUpEnabled() {
         return mPickUpGestureEnabled &&
             (Settings.Secure.getInt(mContext.getContentResolver(),
@@ -166,6 +182,10 @@ public class MotoDozeService extends Service {
 
     private boolean isCameraEnabled() {
         return mCameraGestureEnabled;
+    }
+
+    private boolean isFlashlightEnabled() {
+        return mFlashlightGestureEnabled;
     }
 
     private void handleFlat(boolean isFlat) {
@@ -185,6 +205,9 @@ public class MotoDozeService extends Service {
             if (isCameraEnabled()) {
                 mCameraActivationSensor.disable();
             }
+            if (isFlashlightEnabled()) {
+                mFlashlightActivationSensor.disable();
+            }
         } else {
             if (DEBUG) Log.d(TAG, "Unstowed: " + event.timestamp + " last stowed: " + mLastStowed);
             if (isHandwaveEnabled() && (event.timestamp - mLastStowed) < HANDWAVE_DELTA_NS) {
@@ -197,6 +220,9 @@ public class MotoDozeService extends Service {
             if (isCameraEnabled()) {
                 mCameraActivationSensor.enable();
             }
+            if (isFlashlightEnabled()) {
+                mFlashlightActivationSensor.enable();
+            }
         }
         if (DEBUG) Log.d(TAG, "Stowed: " + isStowed);
     }
@@ -207,14 +233,23 @@ public class MotoDozeService extends Service {
         launchCamera();
     }
 
+    private void handleFlashlightActivation(SensorEvent event) {
+        Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(500);
+        launchFlashlight();
+    }
+
     private void onDisplayOn() {
         if (DEBUG) Log.d(TAG, "Display on");
 
-        if (isPickUpEnabled() || isHandwaveEnabled() || isCameraEnabled()) {
+        if (isPickUpEnabled() || isHandwaveEnabled() || isCameraEnabled() || isFlashlightEnabled()) {
             mStowSensor.disable();
         }
         if (isCameraEnabled()) {
             mCameraActivationSensor.enable();
+        }
+        if (isFlashlightEnabled()) {
+            mFlashlightActivationSensor.enable();
         }
         if (isPickUpEnabled()) {
             mFlatSensor.disable();
@@ -224,7 +259,7 @@ public class MotoDozeService extends Service {
     private void onDisplayOff() {
         if (DEBUG) Log.d(TAG, "Display off");
 
-        if (isPickUpEnabled() || isHandwaveEnabled() || isCameraEnabled()) {
+        if (isPickUpEnabled() || isHandwaveEnabled() || isCameraEnabled() || isFlashlightEnabled()) {
             mStowSensor.enable();
         }
     }
@@ -242,6 +277,7 @@ public class MotoDozeService extends Service {
 
     private void loadPreferences(SharedPreferences sharedPreferences) {
         mCameraGestureEnabled = sharedPreferences.getBoolean(GESTURE_CAMERA_KEY, true);
+        mFlashlightGestureEnabled = sharedPreferences.getBoolean(GESTURE_FLASHLIGHT_KEY, true);
         mPickUpGestureEnabled = sharedPreferences.getBoolean(GESTURE_PICK_UP_KEY, true);
         mHandwaveGestureEnabled = sharedPreferences.getBoolean(GESTURE_HAND_WAVE_KEY, true);
     }
@@ -256,6 +292,13 @@ public class MotoDozeService extends Service {
                     mCameraActivationSensor.enable();
                 } else {
                     mCameraActivationSensor.disable();
+                }
+            } else if (GESTURE_FLASHLIGHT_KEY.equals(key)) {
+                mFlashlightGestureEnabled = sharedPreferences.getBoolean(GESTURE_FLASHLIGHT_KEY, true);
+                if (mFlashlightGestureEnabled) {
+                    mFlashlightActivationSensor.enable();
+                } else {
+                    mFlashlightActivationSensor.disable();
                 }
             } else if (GESTURE_PICK_UP_KEY.equals(key)) {
                 mPickUpGestureEnabled = sharedPreferences.getBoolean(GESTURE_PICK_UP_KEY, true);

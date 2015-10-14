@@ -34,10 +34,11 @@
 
 #define UNUSED __attribute__((unused))
 
-#define SENSOR_TYPE_MMI_FLAT_UP 34
-#define SENSOR_TYPE_MMI_FLAT_DOWN 35
-#define SENSOR_TYPE_MMI_STOW 36
-#define SENSOR_TYPE_MMI_CAMERA_ACTIVATION 37
+#define SENSOR_TYPE_MMI_FLAT_UP 65537
+#define SENSOR_TYPE_MMI_FLAT_DOWN 65538
+#define SENSOR_TYPE_MMI_STOW 65539
+#define SENSOR_TYPE_MMI_CAMERA_ACTIVATION 65540
+#define SENSOR_TYPE_MMI_FLASHLIGHT_ACTIVATION 65546
 
 #define MSP_DEVICE "/dev/msp430"
 
@@ -121,6 +122,9 @@ JNIEXPORT void JNICALL Java_com_cyanogenmod_settings_device_MotoSensor_native_1e
         case SENSOR_TYPE_MMI_CAMERA_ACTIVATION:
             wake_sensors |= M_CAMERA_ACT;
             break;
+        case SENSOR_TYPE_MMI_FLASHLIGHT_ACTIVATION:
+            wake_sensors |= M_CHOPCHOP;
+            break;
     }
 
     set_wake_sensors(wake_sensors);
@@ -149,6 +153,9 @@ JNIEXPORT void JNICALL Java_com_cyanogenmod_settings_device_MotoSensor_native_1d
             break;
         case SENSOR_TYPE_MMI_CAMERA_ACTIVATION:
             wake_sensors &= (~M_CAMERA_ACT);
+            break;
+        case SENSOR_TYPE_MMI_FLASHLIGHT_ACTIVATION:
+            wake_sensors &= M_CHOPCHOP;
             break;
     }
 
