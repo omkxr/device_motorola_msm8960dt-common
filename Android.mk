@@ -60,8 +60,8 @@ ALL_DEFAULT_INSTALLED_MODULES += $(FIRMWARE_MODEM_SYMLINKS)
 FIRMWARE_MODEM_FW_IMAGES := \
     modem_fw.b00 modem_fw.b01 modem_fw.b02 modem_fw.b03 modem_fw.b04 modem_fw.b05 \
     modem_fw.b09 modem_fw.b10 modem_fw.b11 modem_fw.b12 modem_fw.b13 modem_fw.b15 \
-    modem_fw.b16 modem_fw.b23 modem_fw.b24 modem_fw.b25 modem_fw.b27 modem_fw.b28 \
-    modem_fw.b31 modem_fw.flist modem_fw.mdt
+    modem_fw.b16 modem_fw.b17 modem_fw.b18 modem_fw.b23 modem_fw.b24 modem_fw.b25 \
+    modem_fw.b27 modem_fw.b28 modem_fw.b31 modem_fw.flist modem_fw.mdt
 
 FIRMWARE_MODEM_FW_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(FIRMWARE_MODEM_FW_IMAGES)))
 $(FIRMWARE_MODEM_FW_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
