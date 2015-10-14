@@ -1,6 +1,7 @@
 # Bluetooth
 bin/btnvtool
 bin/hci_qcomm_init
+lib/libbtnv.so
 
 # Audio
 lib/libacdbloader.so
@@ -152,17 +153,14 @@ vendor/lib/egl/eglsubAndroid.so
 vendor/lib/egl/libEGL_adreno.so
 vendor/lib/egl/libGLESv1_CM_adreno.so
 vendor/lib/egl/libGLESv2_adreno.so
-vendor/lib/egl/libGLESv2S3D_adreno.so
 vendor/lib/egl/libq3dtools_adreno.so
 vendor/lib/libadreno_utils.so
-vendor/lib/libc2d2_a3xx.so
-vendor/lib/libc2d2_z180.so
+vendor/lib/libc2d30-a3xx.so
 vendor/lib/libC2D2.so
 vendor/lib/libCB.so
 vendor/lib/libgsl.so
-vendor/lib/libllvm-a3xx.so
+vendor/lib/libllvm-qcom.so
 vendor/lib/libOpenCL.so
-vendor/lib/libOpenVG.so
 vendor/lib/libsc-a3xx.so
 
 # Graphics firmware
@@ -214,15 +212,9 @@ bin/batt_health
 bin/dbvc_atvc_property_set
 bin/hardware_revisions.sh
 bin/mount_ext4.sh
-bin/refuse
 
 # MSP firmware
 bin/msp430
-
-# Postprocessing
-bin/mm-pp-daemon
-lib/libmm-abl.so
-lib/libmm-abl-oem.so
 
 # Qualcomm framework
 bin/irsc_util
