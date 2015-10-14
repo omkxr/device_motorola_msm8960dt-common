@@ -94,10 +94,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # SSR
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.qc.sub.rdump.max=20 \
-    persist.sys.qc.sub.rdump.on=1 \
-    persist.sys.qc.sub.rstrtlvl=3 \
-    persist.sys.ssr.restart_level=1
+    persist.sys.qc.sub.rdump.max=3 \
+    persist.sys.ssr.restart_level=3
 
 # Time
 PRODUCT_PROPERTY_OVERRIDES += \

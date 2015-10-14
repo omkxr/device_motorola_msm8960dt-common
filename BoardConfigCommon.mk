@@ -122,14 +122,12 @@ BOARD_SEPOLICY_UNION += \
     keystore.te \
     location.te \
     mediaserver.te \
-    mm-pp-daemon.te \
     mm-qcamerad.te \
     mpdecision.te \
     msp430.te \
     platform_app.te \
     property_contexts \
     property.te \
-    qdumpd.te \
     rmt_storage.te \
     servicemanager.te \
     system_app.te \

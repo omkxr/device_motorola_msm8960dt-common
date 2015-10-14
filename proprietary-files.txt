@@ -240,7 +240,6 @@ bin/efsks
 bin/ks
 bin/netmgrd
 bin/qcks
-bin/qdumpd
 bin/qmi_motext_hook
 bin/qmuxd
 bin/rild
