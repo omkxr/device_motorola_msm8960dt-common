@@ -67,9 +67,6 @@ on init
     symlink /storage/usbdisk /usbdisk
     symlink /storage/usbdisk /mnt/usbdisk
 
-    # CM: We use our own ril-daemon service definition, see mmi-ril-daemon
-    stop ril-daemon
-
 on fs
     mount_all /fstab.qcom
 
@@ -528,7 +525,7 @@ service mmi-boot-sh /system/bin/sh /init.mmi.boot.sh
     user root
     oneshot
 
-service mmi-ril-daemon /system/bin/rild
+service_redefine ril-daemon /system/bin/rild
     class main
     socket rild stream 660 root radio
     socket rild-debug stream 660 radio system

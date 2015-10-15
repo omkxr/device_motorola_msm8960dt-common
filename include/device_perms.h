@@ -33,7 +33,6 @@
     { "persist.camera.", AID_MEDIA, 0 },
 
 #define CONTROL_PERMS_APPEND \
-    { "mmi-ril-daemon",AID_RADIO, AID_RADIO }, \
     { "ril-daemon1",AID_RADIO, AID_RADIO }, \
     { "ril-daemon2",AID_RADIO, AID_RADIO },
 
