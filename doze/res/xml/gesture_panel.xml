@@ -41,6 +41,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="gestures_category"
         android:title="@string/shortcut_gestures_title" >
 
         <SwitchPreference
