@@ -155,7 +155,7 @@ JNIEXPORT void JNICALL Java_com_cyanogenmod_settings_device_MotoSensor_native_1d
             wake_sensors &= (~M_CAMERA_ACT);
             break;
         case SENSOR_TYPE_MMI_FLASHLIGHT_ACTIVATION:
-            wake_sensors &= M_CHOPCHOP;
+            wake_sensors &= (~M_CHOPCHOP);
             break;
     }
 
