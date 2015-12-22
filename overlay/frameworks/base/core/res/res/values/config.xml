@@ -92,9 +92,6 @@
     -->
     <bool name="config_wifiDisplaySupportsProtectedBuffers">false</bool>
 
-    <!-- We dont have different firmware for wifi modes, prevent reloading it -->
-    <bool name="config_wifiApFirmwareReload">false</bool>
-
     <!-- Whether to enable geofence overlay which allows geofence to be replaced
          by an app at run-time. When disabled, only the
          config_geofenceProviderPackageName package will be searched for

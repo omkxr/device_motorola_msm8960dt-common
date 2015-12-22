@@ -118,4 +118,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # WLAN
 PRODUCT_PROPERTY_OVERRIDES += \
+    ro.disableWifiApFirmwareReload=true \
     wifi.interface=wlan0
