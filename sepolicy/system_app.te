@@ -1,2 +1,1 @@
-allow system_app sensors_device:chr_file { getattr open read write ioctl };
-allow system_app shell_data_file:dir search;
+allow system_app sensors_device:chr_file rw_file_perms;

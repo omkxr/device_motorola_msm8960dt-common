@@ -1,0 +1,18 @@
+type bluetooth_loader, domain;
+type bluetooth_loader_exec, exec_type, file_type;
+
+init_daemon_domain(bluetooth_loader)
+
+allow bluetooth_loader shell_exec:file { entrypoint read };
+allow bluetooth_loader bluetooth_loader_exec:file { getattr open execute_no_trans };
+
+allow bluetooth_loader hci_attach_dev:chr_file rw_file_perms;
+allow bluetooth_loader self:capability { dac_override dac_read_search chown };
+allow hci_attach bluetooth_loader:fd use;
+allow hci_attach bluetooth_loader:fifo_file rw_file_perms;
+allow hci_attach persist_bluetooth_file:file create_file_perms;
+allow hci_attach persist_file:dir w_dir_perms;
+
+domain_auto_trans(bluetooth_loader, hci_attach_exec, hci_attach)
+
+set_prop(bluetooth_loader, bluetooth_prop)

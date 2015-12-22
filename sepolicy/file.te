@@ -1,5 +1,7 @@
 # ADSPD
 type adspd_device, dev_type;
+type adspd_data_file, file_type, data_file_type;
+type adspd_socket, file_type;
 type sysfs_adspd, fs_type, sysfs_type;
 
 # Battery health
@@ -8,3 +10,6 @@ type sysfs_batt_health, fs_type, sysfs_type;
 
 # PDS
 type pds_file, file_type;
+
+# WiFi
+type persist_wifi_file, file_type;

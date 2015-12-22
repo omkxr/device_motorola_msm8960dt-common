@@ -1,3 +1,2 @@
-allow mpdecision system_data_file:dir { write add_name };
+file_type_auto_trans(mpdecision, system_data_file, mpctl_data_file)
 type_transition mpdecision socket_device:sock_file mpctl_socket;
-type_transition mpdecision system_data_file:file mpctl_data_file;

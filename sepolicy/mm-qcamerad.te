@@ -1,4 +1,5 @@
-allow mm-qcamerad graphics_device:dir search;
-allow mm-qcamerad graphics_device:chr_file { open read write ioctl };
-allow mm-qcamerad system_server:unix_stream_socket read;
+allow mm-qcamerad system_file:file execmod; # for libl6lencgain and many others
+# WARNING: these sockets shouldn't be under /data
+allow mm-qcamerad system_data_file:dir w_dir_perms;
+allow mm-qcamerad system_data_file:sock_file unlink;
 type_transition mm-qcamerad system_data_file:sock_file camera_socket "cam_socket0";

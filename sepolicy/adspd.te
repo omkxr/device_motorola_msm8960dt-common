@@ -2,13 +2,12 @@ type adspd, domain;
 type adspd_exec, exec_type, file_type;
 init_daemon_domain(adspd)
 
-allow adspd adspd_device:chr_file { open read write ioctl };
+allow adspd adspd_device:chr_file rw_file_perms;
+allow adspd adspd_data_file:dir rw_dir_perms;
+allow adspd adspd_data_file:file create_file_perms;
 allow adspd input_device:dir search;
-allow adspd input_device:chr_file { open read ioctl };
-allow adspd sysfs_adspd:file { open read write };
-allow adspd system_data_file:dir { search write add_name };
-allow adspd system_data_file:file { create open read write setattr };
+allow adspd input_device:chr_file rw_file_perms;
+allow adspd sysfs_adspd:file rw_file_perms;
 
-allow adspd adspd_prop:property_service set;
-allow adspd ctl_default_prop:property_service set;
-unix_socket_connect(adspd, property, init)
+set_prop(adspd, adspd_prop)
+set_prop(adspd, ctl_default_prop)

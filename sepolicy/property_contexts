@@ -1,4 +1,12 @@
-# Motorola service properties
-hw.aov.                     u:object_r:adspd_prop:s0
+# Bluetooth
+qualcomm.bt                 u:object_r:bluetooth_prop:s0
 
+# MMI boot
+hw.revision                 u:object_r:mmi_boot_prop:s0
+manufacturedate             u:object_r:mmi_boot_prop:s0
+mot.iccid                   u:object_r:mmi_boot_prop:s0
+mot.cust_md5                u:object_r:mmi_boot_prop:s0
+
+# Motorola services
+hw.aov.                     u:object_r:adspd_prop:s0
 persist.atvc                u:object_r:atvc_prop:s0

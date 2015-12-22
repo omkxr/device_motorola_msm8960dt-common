@@ -1,0 +1,13 @@
+type mmi_boot, domain;
+type mmi_boot_exec, exec_type, file_type;
+
+# Started by init
+init_daemon_domain(mmi_boot)
+
+allow mmi_boot shell_exec:file { entrypoint read };
+allow mmi_boot mmi_boot_exec:file { getattr open execute_no_trans };
+
+allow mmi_boot self:capability { dac_override sys_module };
+allow mmi_boot utags_block_device:blk_file r_file_perms;
+
+set_prop(mmi_boot, mmi_boot_prop)
