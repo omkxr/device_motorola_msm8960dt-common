@@ -16,8 +16,6 @@
 
 package com.cyanogenmod.settings.device;
 
-import com.android.internal.util.cm.ScreenType;
-
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.os.SystemProperties;
@@ -77,10 +75,7 @@ public class TouchscreenGestureSettings extends PreferenceActivity {
     protected void onResume() {
         super.onResume();
 
-        // If running on a phone, remove padding around the listview
-        if (!ScreenType.isTablet(this)) {
-            getListView().setPadding(0, 0, 0, 0);
-        }
+        getListView().setPadding(0, 0, 0, 0);
     }
 
     @Override
