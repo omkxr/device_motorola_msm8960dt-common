@@ -62,6 +62,7 @@ public class MotoDozeService extends Service {
     private MotoSensor mStowSensor;
     private MotoSensor mCameraActivationSensor;
     private MotoSensor mFlashlightActivationSensor;
+    private PowerManager mPowerManager;
     private WakeLock mSensorWakeLock;
     private CameraManager mCameraManager;
     private String mTorchCameraId;
@@ -117,8 +118,8 @@ public class MotoDozeService extends Service {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         loadPreferences(sharedPrefs);
         sharedPrefs.registerOnSharedPreferenceChangeListener(mPrefListener);
-        PowerManager powerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-        mSensorWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MotoSensorWakeLock");
+        mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+        mSensorWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MotoSensorWakeLock");
         CameraManager mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
         mCameraManager.registerTorchCallback(mTorchCallback, null);
         mTorchCameraId = getTorchCameraId();
@@ -157,9 +158,8 @@ public class MotoDozeService extends Service {
     }
 
     private void launchCamera() {
-        PowerManager powerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         mSensorWakeLock.acquire(SENSOR_WAKELOCK_DURATION);
-        powerManager.wakeUp(SystemClock.uptimeMillis());
+        mPowerManager.wakeUp(SystemClock.uptimeMillis());
         Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA_SECURE);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                 Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
