@@ -26,7 +26,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.hardware.SensorEvent;
-import android.hardware.TorchManager;
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraAccessException;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -61,7 +63,10 @@ public class MotoDozeService extends Service {
     private MotoSensor mCameraActivationSensor;
     private MotoSensor mFlashlightActivationSensor;
     private WakeLock mSensorWakeLock;
+    private CameraManager mCameraManager;
+    private String mTorchCameraId;
     private long mLastPulseTimestamp = 0;
+    private boolean mTorchEnabled = false;
     private boolean mCameraGestureEnabled = false;
     private boolean mFlashlightGestureEnabled = false;
     private boolean mPickUpGestureEnabled = false;
@@ -114,6 +119,9 @@ public class MotoDozeService extends Service {
         sharedPrefs.registerOnSharedPreferenceChangeListener(mPrefListener);
         PowerManager powerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         mSensorWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MotoSensorWakeLock");
+        CameraManager mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
+        mCameraManager.registerTorchCallback(mTorchCallback, null);
+        mTorchCameraId = getTorchCameraId();
     }
 
     @Override
@@ -163,9 +171,11 @@ public class MotoDozeService extends Service {
     }
 
     private void launchFlashlight() {
-        TorchManager torchManager;
-        torchManager = (TorchManager) mContext.getSystemService(Context.TORCH_SERVICE);
-        torchManager.toggleTorch();
+        try {
+            mCameraManager.setTorchMode(mTorchCameraId, !mTorchEnabled);
+        } catch (CameraAccessException e) {
+            // Ignore
+        }
     }
 
     private boolean isPickUpEnabled() {
@@ -263,6 +273,38 @@ public class MotoDozeService extends Service {
             mStowSensor.enable();
         }
     }
+
+    private String getTorchCameraId() {
+        try {
+            for (final String id : mCameraManager.getCameraIdList()) {
+                CameraCharacteristics cc = mCameraManager.getCameraCharacteristics(id);
+                int direction = cc.get(CameraCharacteristics.LENS_FACING);
+                if (direction == CameraCharacteristics.LENS_FACING_BACK) {
+                    return id;
+                }
+            }
+        } catch (CameraAccessException e) {
+            // Ignore
+        }
+
+        return null;
+    }
+
+    private CameraManager.TorchCallback mTorchCallback = new CameraManager.TorchCallback() {
+        @Override
+        public void onTorchModeChanged(String cameraId, boolean enabled) {
+            if (!cameraId.equals(mTorchCameraId))
+                return;
+            mTorchEnabled = enabled;
+        }
+
+        @Override
+        public void onTorchModeUnavailable(String cameraId) {
+            if (!cameraId.equals(mTorchCameraId))
+                return;
+            mTorchEnabled = false;
+        }
+    };
 
     private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
         @Override
