@@ -95,8 +95,19 @@
     <!-- We dont have different firmware for wifi modes, prevent reloading it -->
     <bool name="config_wifiApFirmwareReload">false</bool>
 
-    <!-- Component name of the geofence services provider. -->
-    <string name="config_geofenceServicesProvider" translatable="false">com.motorola.motgeofencesvc</string>
+    <!-- Whether to enable geofence overlay which allows geofence to be replaced
+         by an app at run-time. When disabled, only the
+         config_geofenceProviderPackageName package will be searched for
+         geofence implementation, otherwise packages whose signature matches the
+         signatures of config_locationProviderPackageNames will be searched, and
+         the service with the highest version number will be picked. Anyone who
+         wants to disable the overlay mechanism can set it to false.
+         -->
+    <bool name="config_enableGeofenceOverlay" translatable="false">false</bool>
+
+    <!-- Package name providing geofence API support. Used only when
+         config_enableGeofenceOverlay is false. -->
+    <string name="config_geofenceProviderPackageName" translatable="false">com.motorola.motgeofencesvc</string>
 
     <!--  Maximum number of supported users -->
     <integer name="config_multiuserMaximumUsers">4</integer>
