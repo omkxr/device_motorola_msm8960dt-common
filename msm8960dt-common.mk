@@ -105,15 +105,6 @@ PRODUCT_PACKAGES += \
     libjni_motoSensor \
     MotoDoze
 
-# Filesystem
-PRODUCT_PACKAGES += \
-    e2fsck \
-    fibmap.f2fs \
-    fsck.f2fs \
-    make_ext4fs \
-    mkfs.f2fs \
-    resize2fs
-
 # IRSC
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sec_config:system/etc/sec_config
@@ -190,10 +181,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libcurl \
     libxml2
-
-# USB
-PRODUCT_PACKAGES += \
-    com.android.future.usb.accessory
 
 # Wifi
 PRODUCT_PACKAGES += \
