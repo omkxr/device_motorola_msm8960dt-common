@@ -188,11 +188,9 @@ vendor/lib/lib-rtpsl.so
 
 # Media
 lib/libDivxDrm.so
-lib/libExtendedExtractor.so
 lib/libI420colorconvert.so
 lib/libmm-color-convertor.so
 lib/libmmosal.so
-lib/libmmparser.so
 lib/libOmxAacDec.so
 lib/libOmxAmrwbplusDec.so
 lib/libOmxEvrcDec.so

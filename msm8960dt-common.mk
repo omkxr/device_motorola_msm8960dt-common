@@ -142,18 +142,13 @@ endif
 
 # OMX
 PRODUCT_PACKAGES += \
-    libdashplayer \
     libOmxVdec \
     libOmxVenc \
     libOmxAacEnc \
     libOmxAmrEnc \
     libOmxEvrcEnc \
     libOmxQcelp13Enc \
-    libstagefrighthw \
-    qcmediaplayer
-
-PRODUCT_BOOT_JARS += \
-    qcmediaplayer
+    libstagefrighthw
 
 # Power HAL
 PRODUCT_PACKAGES += \
