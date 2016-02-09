@@ -81,14 +81,8 @@ USE_OPENGL_RENDERER := true
 # Flags
 BOARD_USES_LEGACY_MMAP := true
 
-# Fonts
-EXTENDED_FONT_FOOTPRINT := true
-
 # Media
 TARGET_NO_ADAPTIVE_PLAYBACK := true
-
-# Motorola
-TARGET_USES_MOTOROLA_LOG := true
 
 # Power HAL
 TARGET_POWERHAL_VARIANT := qcom
@@ -106,14 +100,6 @@ TARGET_USERIMAGES_USE_F2FS := true
 
 BOARD_SEPOLICY_DIRS += \
     device/motorola/msm8960dt-common/sepolicy
-
-# USB
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/file
-
-# Vold
-BOARD_VOLD_DISC_HAS_MULTIPLE_MAJORS := true
-BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
-BOARD_VOLD_MAX_PARTITIONS := 40
 
 # Wifi
 BOARD_HAS_QCOM_WLAN := true
