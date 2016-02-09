@@ -52,7 +52,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
 # System Properties
--include $(LOCAL_PATH)/system_prop.mk
+include $(LOCAL_PATH)/system_prop.mk
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
