@@ -119,11 +119,6 @@ lib/libdrmdiag.so
 lib/libdrmfs.so
 lib/libdrmtime.so
 lib/libQSEEComAPI.so
-vendor/lib/drm/libdrmwvmplugin.so
-vendor/lib/mediadrm/libwvdrmengine.so
-vendor/lib/libwvdrm_L1.so
-vendor/lib/libwvm.so
-vendor/lib/libWVStreamControlAPI_L1.so
 
 # GPS
 -app/com.qualcomm.location/com.qualcomm.location.apk
@@ -259,3 +254,11 @@ lib/hw/sensors.msm8960.so
 bin/time_daemon
 -lib/libtime_genoff.so
 lib/libTimeService.so
+
+# Widevine
+vendor/lib/drm/libdrmwvmplugin.so
+vendor/lib/libdrmdecrypt.so
+vendor/lib/libwvdrm_L1.so
+vendor/lib/libwvm.so
+vendor/lib/libWVStreamControlAPI_L1.so
+vendor/lib/mediadrm/libwvdrmengine.so
