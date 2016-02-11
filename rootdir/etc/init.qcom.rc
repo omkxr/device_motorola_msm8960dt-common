@@ -241,8 +241,6 @@ on early-boot
     setprop ro.sys.atvc_allow_ap_mot_log 0
     setprop ro.sys.atvc_allow_simswap 0
 
-    exec /system/bin/sh /system/etc/init.qcom.wifi.sh ${ro.board.platform} ${ro.serialno}
-
 on boot
     # mount debugfs for systrace
     mount debugfs /sys/kernel/debug /sys/kernel/debug
@@ -553,6 +551,12 @@ service time_daemon /system/bin/time_daemon
     class late_start
     user root
     group root
+
+service wcnss_trigger /system/bin/sh /system/etc/init.qcom.wifi.sh ${ro.serialno}
+    class main
+    user root
+    group root
+    oneshot
 
 # WPA
 service p2p_supplicant /system/bin/wpa_supplicant \
