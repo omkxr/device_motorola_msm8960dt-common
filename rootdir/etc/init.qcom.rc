@@ -450,16 +450,6 @@ service bootmodem /system/bin/bootmodem
     oneshot
     disabled
 
-on property:bluetooth.isEnabled=true
-    start btwlancoex
-    write /sys/class/bluetooth/hci0/idle_timeout 7000
-
-service btwlancoex /system/bin/sh /system/etc/init.qcom.coex.sh
-    user bluetooth
-    group bluetooth net_bt_admin inet net_admin net_raw
-    oneshot
-    disabled
-
 on property:bluetooth.hciattach=false
     setprop bluetooth.status off
 
