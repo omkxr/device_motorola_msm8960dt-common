@@ -120,7 +120,7 @@ public class MotoDozeService extends Service {
         sharedPrefs.registerOnSharedPreferenceChangeListener(mPrefListener);
         mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         mSensorWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MotoSensorWakeLock");
-        CameraManager mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
+        mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
         mCameraManager.registerTorchCallback(mTorchCallback, null);
         mTorchCameraId = getTorchCameraId();
     }
