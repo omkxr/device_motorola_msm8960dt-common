@@ -99,7 +99,7 @@ TARGET_USERIMAGES_USE_F2FS := true
 -include device/qcom/sepolicy/sepolicy.mk
 
 BOARD_SEPOLICY_DIRS += \
-    device/motorola/msm8960dt-common/sepolicy
+    $(LOCAL_PATH)/sepolicy
 
 # Wifi
 BOARD_HAS_QCOM_WLAN := true
