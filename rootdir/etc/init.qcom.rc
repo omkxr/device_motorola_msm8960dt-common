@@ -461,12 +461,6 @@ service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
     disabled
     oneshot
 
-service hw_revs /system/bin/hardware_revisions.sh
-    class main
-    user system
-    group system
-    oneshot
-
 service irsc_util /system/bin/irsc_util "/etc/sec_config"
     class main
     user root
