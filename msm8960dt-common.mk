@@ -160,8 +160,7 @@ PRODUCT_PACKAGES += \
 # Ramdisk
 PRODUCT_PACKAGES += \
     init.qcom.bt.sh \
-    init.qcom.wifi.sh \
-    moto_com.sh
+    init.qcom.wifi.sh
 
 PRODUCT_PACKAGES += \
     fstab.qcom \

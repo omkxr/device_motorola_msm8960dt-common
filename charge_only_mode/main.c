@@ -38,6 +38,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define LOG_TAG "CHARGE_ONLY_MODE"
 #include <utils/Log.h>
 
+extern int __reboot(int, int, int, void*);
+
 static int quit = 0;
 static int launched = 0;
 static int shutdown = 0;
@@ -48,7 +50,7 @@ void power_event(int update_leds);
 #define ANIMATION_TIMEOUT (1000 / 2)
 #define POWERUP_VOLTAGE 3600000
 
-#define FS_PATH "/data/chargeonlymode"
+#define FS_PATH "/data/com/chargeonlymode"
 /* The follow two funcs are used to handle kpanic and wdreset case in COM */
 int save_mode(const char *path)
 {
@@ -71,13 +73,13 @@ int clear_mode(const char *path)
 }
 
 /* This drives the bubbling animation */
-void animation_alarm(void *_)
+void animation_alarm(void *unused __unused)
 {
 	alarm_set_relative(animation_alarm, NULL, ANIMATION_TIMEOUT);
 	power_event(0);
 }
 
-void screen_brightness_animation_alarm2(void *_)
+void screen_brightness_animation_alarm2(void *unused __unused)
 {
 	set_brightness(0.0);
 
@@ -91,7 +93,7 @@ void screen_brightness_animation_alarm2(void *_)
         display_blank();
 }
 
-void screen_brightness_animation_alarm1(void *_)
+void screen_brightness_animation_alarm1(void *unused __unused)
 {
 	set_brightness(0.4);
 	/* Bright for 10s */
@@ -107,7 +109,7 @@ void screen_brightness_animation_start(int animation_timeout)
 	alarm_set_relative(animation_alarm, NULL, animation_timeout);
 }
 
-void power_key_alarm(void *_)
+void power_key_alarm(void *unused __unused)
 {
 	/* Delete the timers before reboot the phone. */
 	alarm_cancel(screen_brightness_animation_alarm2);
@@ -173,7 +175,8 @@ void power_event(int update_leds)
 		set_battery_led(&state);
 
 	/* When the charger is unplugged the device shall shutdown at once. */
-	if (!shutdown && !state.is_plugged_into_ac && !state.is_plugged_into_usb) {
+	if (!shutdown && !state.is_plugged_into_ac && !state.is_plugged_into_usb &&
+			!state.is_charging) {
 		shutdown = 1;
 		alarm_cancel(screen_brightness_animation_alarm2);
 		alarm_cancel(screen_brightness_animation_alarm1);

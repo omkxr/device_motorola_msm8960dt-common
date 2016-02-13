@@ -25,6 +25,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <zlib.h>
 #define LOG_TAG "CHARGE_ONLY_MODE"
 #include <cutils/log.h>
@@ -297,7 +298,7 @@ void draw_uninit(void)
 	draw_initialized = 0;
 }
 
-void draw(int w, int h, unsigned short *color_channel, int percent, int error)
+void draw(int w __unused, int h __unused, unsigned short *color_channel, int percent, int error)
 {
 	struct asset *desired_ic_pane_a, *desired_ic_pane_i;
 	static int frame = 0;
