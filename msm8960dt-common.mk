@@ -18,8 +18,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 $(call inherit-product-if-exists, vendor/motorola/msm8960dt-common/msm8960dt-common-vendor.mk)
 
-LOCAL_PATH := device/motorola/msm8960dt-common
-
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
