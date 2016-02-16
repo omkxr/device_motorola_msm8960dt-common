@@ -146,6 +146,7 @@ endif
 
 # OMX
 PRODUCT_PACKAGES += \
+    libOmxCore \
     libOmxVdec \
     libOmxVenc \
     libOmxAacEnc \
