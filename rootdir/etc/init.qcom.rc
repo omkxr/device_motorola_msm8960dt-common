@@ -61,20 +61,6 @@ on fs
     wait /dev/block/platform/msm_sdcc.1/by-name/pds
     exec /system/bin/mount_pds.sh
 
-    # Set correct permissions for HOB, DHOB, CID Partitions and CLOGO Partitions
-    exec /system/bin/chmod -L 660 /dev/block/platform/msm_sdcc.1/by-name/hob
-    exec /system/bin/chmod -L 660 /dev/block/platform/msm_sdcc.1/by-name/dhob
-    exec /system/bin/chmod -L 660 /dev/block/platform/msm_sdcc.1/by-name/cid
-    exec /system/bin/chmod -L 660 /dev/block/platform/msm_sdcc.1/by-name/clogo
-    exec /system/bin/chown -L root:radio /dev/block/platform/msm_sdcc.1/by-name/hob
-    exec /system/bin/chown -L root:radio /dev/block/platform/msm_sdcc.1/by-name/dhob
-    exec /system/bin/chown -L root:mot_dbvc /dev/block/platform/msm_sdcc.1/by-name/cid
-    exec /system/bin/chown -L root:mot_tcmd /dev/block/platform/msm_sdcc.1/by-name/clogo
-
-    # Set correct permissions for UTAGS
-    exec /system/bin/chmod -L 660 /dev/block/platform/msm_sdcc.1/by-name/utags
-    exec /system/bin/chown -L mot_tcmd:system /dev/block/platform/msm_sdcc.1/by-name/utags
-
     restorecon_recursive /persist
 
 on post-fs-data

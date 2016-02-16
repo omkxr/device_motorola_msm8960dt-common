@@ -220,10 +220,21 @@
 /dev/qseecom              0660   system     drmrpc
 /dev/sec                  0660   system     drmrpc
 
-# HOB and DHOB partition permission
-/dev/mot_hob_ram          0660   radio      radio
-/dev/block/mmcblk0p20     0660   root       radio
+# CID
+/dev/block/mmcblk0p29     0660   root       mot_dbvc
+
+# CLOGO
+/dev/block/mmcblk0p31     0660   root       mot_tcmd
+
+# DHOB
+/dev/block/mmcblk0p22     0660   root       radio
+
+# HOB
 /dev/block/mmcblk0p21     0660   root       radio
+/dev/mot_hob_ram          0660   radio      radio
+
+# UTAGS
+/dev/block/mmcblk0p8      0660   mot_tcmd   system
 
 # From moto ueventd.rc
 /dev/assd                 0660   smartcard  smartcard
