@@ -57,10 +57,6 @@ on fs
 
     start bootmodem
 
-    # Mount PDS
-    wait /dev/block/platform/msm_sdcc.1/by-name/pds
-    exec /system/bin/mount_pds.sh
-
     restorecon_recursive /persist
 
 on post-fs-data

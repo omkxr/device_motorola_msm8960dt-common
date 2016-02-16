@@ -161,8 +161,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     init.qcom.bt.sh \
     init.qcom.wifi.sh \
-    moto_com.sh \
-    mount_pds.sh
+    moto_com.sh
 
 PRODUCT_PACKAGES += \
     fstab.qcom \
