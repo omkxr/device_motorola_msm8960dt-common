@@ -88,6 +88,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.call_ring.multiple=false \
     ro.use_data_netmgrd=true
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.telephony.ril_class=GhostRIL
+
 # Scheduler
 PRODUCT_PROPERTY_OVERRIDES += \
     sys.io.scheduler=bfq
