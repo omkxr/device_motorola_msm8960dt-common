@@ -3,11 +3,6 @@ on early-init
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/module/msm_thermal/core_control/enabled 1
 
-    # KSM
-    write /sys/kernel/mm/ksm/deferred_timer 1
-    write /sys/kernel/mm/ksm/sleep_millisecs 2000
-    write /sys/kernel/mm/ksm/run 1
-
 on enable-low-power
     # Enable Power modes
     write /sys/module/rpm_resources/enable_low_power/L2_cache 1
