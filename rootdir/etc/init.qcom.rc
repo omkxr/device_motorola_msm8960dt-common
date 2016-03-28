@@ -283,6 +283,11 @@ on boot
     setprop net.tcp.usercfg.wifi       1
     setprop net.tcp.usercfg.lte        0
 
+    # Assign TCP buffer thresholds to be ceiling value of technology maximums
+    # Increased technology maximums should be reflected here.
+    write /proc/sys/net/core/rmem_max  8388608
+    write /proc/sys/net/core/wmem_max  8388608
+
     # permissions updates to Camera Flash and torch nodes
     chown system camera /sys/class/leds/torch-flash/camera_strobe
     chown system camera /sys/class/leds/torch-flash/flash_light
