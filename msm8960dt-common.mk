@@ -107,6 +107,10 @@ PRODUCT_PACKAGES += \
     libjni_motoSensor \
     MotoDoze
 
+# Gello
+PRODUCT_PACKAGES += \
+    Gello
+
 # IRSC
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sec_config:system/etc/sec_config
