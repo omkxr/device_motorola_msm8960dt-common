@@ -16,7 +16,6 @@
 
 package com.cyanogenmod.settings.device;
 
-import android.app.Activity;
 import android.app.IntentService;
 import android.app.Service;
 import android.content.ActivityNotFoundException;
@@ -29,12 +28,11 @@ import android.hardware.SensorEvent;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraAccessException;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.os.UserHandle;
 import android.os.SystemClock;
+import android.os.UserHandle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -84,10 +82,10 @@ public class MotoDozeService extends Service {
                     handleStow(event);
                     break;
                 case MotoSensor.SENSOR_TYPE_MMI_CAMERA_ACTIVATION:
-                    handleCameraActivation(event);
+                    handleCameraActivation();
                     break;
                 case MotoSensor.SENSOR_TYPE_MMI_FLASHLIGHT_ACTIVATION:
-                    handleFlashlightActivation(event);
+                    handleFlashlightActivation();
                     break;
             }
         }
@@ -237,13 +235,13 @@ public class MotoDozeService extends Service {
         if (DEBUG) Log.d(TAG, "Stowed: " + isStowed);
     }
 
-    private void handleCameraActivation(SensorEvent event) {
+    private void handleCameraActivation() {
         Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(500);
         launchCamera();
     }
 
-    private void handleFlashlightActivation(SensorEvent event) {
+    private void handleFlashlightActivation() {
         Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(500);
         launchFlashlight();
