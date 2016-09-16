@@ -50,13 +50,6 @@ TARGET_KERNEL_SOURCE := kernel/motorola/ghost
 TARGET_KERNEL_CONFIG := msm8960dt_mmi_defconfig
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-linux-androidkernel-
 
-WLAN_MODULES:
-	mkdir -p $(KERNEL_MODULES_OUT)/prima
-	mv $(KERNEL_MODULES_OUT)/wlan.ko $(KERNEL_MODULES_OUT)/prima/prima_wlan.ko
-	ln -sf /system/lib/modules/prima/prima_wlan.ko $(TARGET_OUT)/lib/modules/wlan.ko
-
-TARGET_KERNEL_MODULES += WLAN_MODULES
-
 # Audio
 BOARD_USES_ALSA_AUDIO := true
 BOARD_USES_FLUENCE_INCALL := true
