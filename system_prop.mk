@@ -28,7 +28,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.bluetooth.hfp.ver=1.6 \
-    ro.qualcomm.bt.hci_transport=smd
+    ro.qualcomm.bt.hci_transport=smd \
+    qcom.bluetooth.soc=smd
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.qualcomm.bluetooth.ftp=true \
