@@ -7,15 +7,18 @@ PRODUCT_PROPERTY_OVERRIDES += \
     lpa.decode=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.audio.fluence.mode=endfire \
-    persist.audio.handset.mic=analog \
-    persist.audio.vr.enable=false
+    audio.offload.disable=1 \
+    mm.enable.smoothstreaming=true \
+    persist.audio.fluence.voicecall=true \
+    persist.audio.fluence.voicerec=false \
+    persist.audio.fluence.speaker=true \
+    qcom.hw.aac.encoder=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
     qcom.hw.aac.encoder=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qc.sdk.audio.fluencetype=fluence \
+    ro.qc.sdk.audio.fluencetype=none \
     ro.qc.sdk.audio.ssr=false
 
 # Bluetooth
