@@ -639,3 +639,90 @@
         <ctl name="HPHL DAC Switch" value="1" />
         <ctl name="HPHL Volume" value="80" />
     </path>
+
+    <!-- Camcorder Tx -->
+    <path name="camcorder-mic">
+        <ctl name="AIF1_CAP Mixer SLIM TX7" value="1" />
+        <ctl name="AIF1_CAP Mixer SLIM TX8" value="1" />
+        <ctl name="SLIM TX7 MUX" value="DEC3" />
+        <ctl name="DEC3 MUX" value="ADC4" />
+        <ctl name="TX3 HPF cut off" value="MIN_3DB_75Hz" />
+        <ctl name="ADC4 Volume" value="50" />
+        <ctl name="SLIM TX8 MUX" value="DEC6" />
+        <ctl name="DEC6 MUX" value="ADC1" />
+        <ctl name="TX6 HPF cut off" value="MIN_3DB_75Hz" />
+        <ctl name="ADC1 Volume" value="50" />
+        <ctl name="MICBIAS3 CAPLESS Switch" value="0" />
+        <ctl name="MICBIAS4 CAPLESS Switch" value="0" />
+        <ctl name="SLIM_0_TX Channels" value="Two" />
+    </path>
+
+    <!-- TTY Headset Tx -->
+    <path name="voice-tty-hco-headset-mic">
+        <ctl name="AIF1_CAP Mixer SLIM TX7" value="1" />
+        <ctl name="TTY Mode" value="HCO" />
+        <ctl name="SLIM_0_TX Channels" value="One" />
+        <ctl name="SLIM TX7 MUX" value="DEC8" />
+        <ctl name="DEC8 MUX" value="ADC2" />
+        <ctl name="ADC2 Volume" value="25" />
+    </path>
+
+    <!-- TTY Full Rx -->
+    <path name="voice-tty-full-headphones">
+        <ctl name="SLIM RX1 MUX" value="AIF1_PB" />
+        <ctl name="TTY Mode" value="FULL" />
+        <ctl name="SLIM_0_RX Channels" value="One" />
+        <ctl name="RX3 MIX1 INP1" value="RX1" />
+        <ctl name="HPHL DAC Switch" value="1" />
+        <ctl name="HPHL Volume" value="80" />
+    </path>
+
+    <!-- TTY Full Tx -->
+    <path name="voice-tty-full-headset-mic">
+        <ctl name="AIF1_CAP Mixer SLIM TX7" value="1" />
+        <ctl name="SLIM_0_TX Channels" value="One" />
+        <ctl name="SLIM TX7 MUX" value="DEC8" />
+        <ctl name="DEC8 MUX" value="ADC2" />
+        <ctl name="ADC2 Volume" value="25" />
+    </path>
+
+    <!-- BT SCO Rx -->
+    <path name="bt-sco-headset">
+    </path>
+
+    <!-- BT SCO Tx -->
+    <path name="bt-sco-mic">
+    </path>
+
+    <!-- BT SCO WB Rx -->
+    <path name="bt-sco-headset-wb">
+    </path>
+
+    <!-- BT SCO WB Tx -->
+    <path name="bt-sco-mic-wb">
+    </path>
+
+    <!-- PROXY Rx -->
+    <path name="afe-proxy">
+    </path>
+
+    <!-- USB PROXY Rx -->
+    <path name="usb-headphones">
+    </path>
+
+    <!-- HDMI -->
+    <path name="hdmi">
+    </path>
+
+    <!-- HDMI Speaker -->
+    <path name="speaker-and-hdmi">
+    </path>
+
+    <!-- PROXY Rx Speaker -->
+    <path name="speaker-and-headphones">
+        <ctl name="HPL AIC Output Mixer L_DAC Switch" value="1" />
+        <ctl name="HPL AIC Output Mixer R_DAC Switch" value="1" />
+        <ctl name="AIC DAC Playback SwitchL" value="0" />
+        <ctl name="AIC DAC Playback SwitchR" value="0" />
+    </path>
+</mixer>
